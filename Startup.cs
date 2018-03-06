@@ -26,7 +26,7 @@ namespace ProductServiceApi
         {
             services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddTransient<IProductDataAccess, ProductDataAccess>();
+            //services.AddTransient<IProductDataAccess, ProductDataAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -10,7 +10,6 @@ namespace ProductServiceApi.Controllers
     [Route("api/[controller]/[action]")]
     public class ProductsController : Controller
     {
-      
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
