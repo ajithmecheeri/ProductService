@@ -4,6 +4,7 @@ using Couchbase;
 using Couchbase.Authentication;
 using Couchbase.Configuration.Client; 
 using System.Collections.Generic;
+using Model;
 
 namespace DataAccessLib
 {
@@ -22,16 +23,23 @@ namespace DataAccessLib
         }
 
 
-        public bool AddProduct()
+        public bool AddProduct( Product product)
         {
             using (var bucket = cluster.OpenBucket("Product"))
             {
                 var document = new Document<dynamic>
                 {
-                    Id = "Hello",
+                   
+                    Id = Convert.ToString(product.ProductNo),
                     Content = new
                     {
-                        name = "Couchbase"
+                        ProductNo=product.ProductNo,
+                        Name = product.Name,
+                        LongDescription = product.LongDescription,
+                        ShortDescription = product.ShortDescription,
+                        Image = product.Image,
+
+
                     }
                 };
 

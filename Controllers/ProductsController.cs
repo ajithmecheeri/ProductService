@@ -4,19 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataAccessLib;
+using Model;
+using System.Web;
+using System.Net.Http;
+using System.Net;
 
 namespace ProductServiceApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class ProductsController : Controller
     {
+        private ProductDataAccess dataAccess;
       
+      public ProductsController()
+      {
+           dataAccess=new ProductDataAccess();
+      }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            ProductDataAccess dataAccess=new ProductDataAccess();
-            dataAccess.AddProduct();
+           
+            //dataAccess.AddProduct();
              return new string[] { "value1", "value2" };
         }
 
@@ -34,8 +43,12 @@ namespace ProductServiceApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public HttpResponseMessage CreateProduct([FromBody] Product product)
         {
+            dataAccess.AddProduct(product);
+            return new HttpResponseMessage(HttpStatusCode.OK);
+            
+           // Request.CreateResponse(HttpStatusCode.OK,product);
         }
 
         // PUT api/values/5
