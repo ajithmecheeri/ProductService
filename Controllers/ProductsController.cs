@@ -51,6 +51,12 @@ namespace ProductServiceApi.Controllers
            // Request.CreateResponse(HttpStatusCode.OK,product);
         }
 
+        [HttpGet]
+        public List<dynamic> GetAllProducts()
+        {
+            return dataAccess.GetAllProduct();
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

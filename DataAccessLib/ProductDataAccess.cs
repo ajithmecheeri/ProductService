@@ -5,6 +5,7 @@ using Couchbase.Authentication;
 using Couchbase.Configuration.Client; 
 using System.Collections.Generic;
 using Model;
+using System.Linq;
 
 namespace DataAccessLib
 {
@@ -13,12 +14,12 @@ namespace DataAccessLib
     {
         Cluster cluster = new Cluster(new ClientConfiguration 
         { 
-        Servers = new List<Uri> { new Uri("http://88.88.88.1") }
+        Servers = new List<Uri> { new Uri("http://192.168.56.1") }
         });
 
         public ProductDataAccess()
         {
-            var authenticator = new PasswordAuthenticator("Administrator", "Tesco123");
+            var authenticator = new PasswordAuthenticator("Administrator", "123456");
             cluster.Authenticate(authenticator); 
         }
 
@@ -49,6 +50,23 @@ namespace DataAccessLib
             }
 
         } 
+
+
+        public List<dynamic> GetAllProduct()
+        {
+            List<dynamic> productList = null;
+            using (var bucket = cluster.OpenBucket("Product"))
+            {
+                var query = "SELECT * FROM Product";
+                var result = bucket.Query<dynamic>(query);
+                if(result.Success)
+                {
+                    productList = result.Rows;
+                }
+            }
+
+            return productList;
+        }
         
     }
 }
