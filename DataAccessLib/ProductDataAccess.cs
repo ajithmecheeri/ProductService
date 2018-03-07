@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Model;
 using System.Linq;
 
+
 namespace DataAccessLib
 {
 
@@ -14,12 +15,12 @@ namespace DataAccessLib
     {
         Cluster cluster = new Cluster(new ClientConfiguration 
         { 
-        Servers = new List<Uri> { new Uri("http://192.168.56.1") }
+        Servers = new List<Uri> { new Uri("http://88.88.88.1") }
         });
 
         public ProductDataAccess()
         {
-            var authenticator = new PasswordAuthenticator("Administrator", "123456");
+            var authenticator = new PasswordAuthenticator("Administrator", "Tesco123");
             cluster.Authenticate(authenticator); 
         }
 
@@ -66,6 +67,19 @@ namespace DataAccessLib
             }
 
             return productList;
+        }
+
+
+        public Product GetProductById(string id)
+        {
+            Product product = null;
+            using(var bucket = cluster.OpenBucket("Product"))
+            {
+                var result = bucket.GetDocument<Product>(id);
+                product = result.Content;
+            }
+
+            return product;
         }
         
     }

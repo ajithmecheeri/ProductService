@@ -16,10 +16,10 @@ namespace ProductServiceApi.Controllers
     {
         private ProductDataAccess dataAccess;
       
-      public ProductsController()
-      {
-           dataAccess=new ProductDataAccess();
-      }
+        public ProductsController()
+        {
+            dataAccess=new ProductDataAccess();
+        }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -29,10 +29,10 @@ namespace ProductServiceApi.Controllers
              return new string[] { "value1", "value2" };
         }
 
-         [HttpGet("{id}")]
-        public string GetProductById(int Id)
-        {
-            return "Value entered is " + Id.ToString();
+        [HttpGet("{id}")]
+        public Product GetProductById(int Id)
+        {            
+            return dataAccess.GetProductById(Convert.ToString(Id));            
         }
         // GET api/values/5
         [HttpGet("{id}")]
